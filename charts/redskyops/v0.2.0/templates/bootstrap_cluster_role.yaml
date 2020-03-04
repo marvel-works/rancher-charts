@@ -1,8 +1,8 @@
-{{- if .Values.rbac.create -}}
+{{- if and .Values.rbac.create .Values.rbac.bootstrapPermissions -}}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ .Release.Name }}-aggregate-to-patching
+  name: "{{ .Release.Name }}-aggregate-to-patching"
   labels:
     "redskyops.dev/aggregate-to-patching": "true"
 rules:
@@ -22,4 +22,12 @@ rules:
     verbs:
       - patch
       - get
+{{ if .Values.rbac.extraPermissions }}
+  - apiGroups:
+      - ""
+    resources:
+      - namespaces,serviceaccounts
+    verbs:
+      - create
+{{- end -}}
 {{- end -}}
