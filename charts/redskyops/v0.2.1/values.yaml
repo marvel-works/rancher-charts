@@ -1,7 +1,7 @@
 # redskyImage is the image name (without tag) of the Red Sky Controller
 redskyImage: "gcr.io/redskyops/redskyops-controller"
 # redskyTag sets the tag (application version) of the Red Sky Controller (for a chart release, it is preferable to only vary the patch level of this semver)
-redskyTag: "1.4.2"
+redskyTag: "1.5.0"
 # redskyImagePullPolicy is the pull policy to apply to the Red Sky Controller image
 redskyImagePullPolicy: "Always"
 

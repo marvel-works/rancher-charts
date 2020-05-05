@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app.kubernetes.io/name: "redskyops"
+    app.kubernetes.io/name: redskyops
     app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
     app.kubernetes.io/instance: "{{ .Release.Name }}"
     app.kubernetes.io/managed-by: "{{ .Release.Service }}"
@@ -15,7 +15,7 @@ spec:
     port: 8443
     targetPort: https
   selector:
-    app.kubernetes.io/instance: {{ .Release.Name | quote }}
+    app.kubernetes.io/instance: "{{ .Release.Name }}"
     app.kubernetes.io/name: redskyops
     control-plane: controller-manager
 ---
@@ -23,7 +23,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.kubernetes.io/name: "redskyops"
+    app.kubernetes.io/name: redskyops
     app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
     app.kubernetes.io/instance: "{{ .Release.Name }}"
     app.kubernetes.io/managed-by: "{{ .Release.Service }}"
@@ -34,7 +34,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/instance: {{ .Release.Name | quote }}
+      app.kubernetes.io/instance: "{{ .Release.Name }}"
       app.kubernetes.io/name: redskyops
       control-plane: controller-manager
   template:
@@ -42,9 +42,9 @@ spec:
       annotations:
         redskyops.dev/secretHash: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
       labels:
-        app.kubernetes.io/instance: {{ .Release.Name | quote }}
+        app.kubernetes.io/instance: "{{ .Release.Name }}"
         app.kubernetes.io/name: redskyops
-        app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+        app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
         control-plane: controller-manager
     spec:
       containers:
@@ -77,7 +77,7 @@ spec:
         - secretRef:
             name: "{{ .Release.Name }}-manager"
             optional: true
-        image: {{ .Values.redskyImage }}:{{ .Values.redskyTag }}
+        image: "{{ .Values.redskyImage }}:{{ .Values.redskyTag }}"
         imagePullPolicy: {{ .Values.redskyImagePullPolicy }}
         name: manager
         resources:

@@ -16,7 +16,7 @@ questions:
     type: string
     label: Image Name
   - variable: redskyTag
-    default: "1.4.2"
+    default: "1.5.0"
     description: "Docker image tag"
     type: string
     label: Image Tag
